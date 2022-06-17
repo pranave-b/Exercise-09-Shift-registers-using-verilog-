@@ -40,36 +40,95 @@ The logic circuit given below shows a parallel-in-parallel-out shift register. T
 FIGURE-04
 A Parallel in Parallel out (PIPO) shift register is used as a temporary storage device and like SISO Shift register it acts as a delay element.
 
-### Procedure
-/* write all the steps invloved */
+## Procedure
+```
+1. Use quartus software and import required modules.
+
+2. Assign inputs and outputs for shift registers.
+
+3. Assign logic for input to give output at positive edge.
+
+4. Perform opertaions and produce rtl circuit.
+
+5. end module
+```
 
 
 
-### PROGRAM 
-/*
+## PROGRAM 
+```
 Program for  Implementation-of Shift-registers-using-verilog-
-Developed by: 
-RegisterNumber:  
-*/
+Developed by: PRANAVE B
+RegisterNumber:  212221240040
+```
+
+### Serial Input Parallel Output (SIPO):
+```
+module SIPO(SI,Clk,PO);
+input SI,Clk;
+output[0:7]PO;
+reg[0:7]temp;
+always@(posedge Clk)
+begin
+temp = {temp[0:6],SI};
+end
+assign PO = temp;
+endmodule
+```
+### Parallel Input Serial Output (PISO):
+```
+module PISO(Clk, Parallel_In,load, Serial_Out);
+input Clk,load;
+input [3:0]Parallel_In;
+output reg Serial_Out;
+reg [3:0]tmp;
+always @(posedge Clk)
+begin
+if(load)
+tmp<=Parallel_In;
+else
+begin
+Serial_Out<=tmp[3];
+tmp<={tmp[2:0],1'b0};
+end
+end
+endmodule
+```
+### Parallel Input Parallel Output (PIPO):
+```
+module PIPO(PI,Clk,PO);
+input Clk;
+input[3:0]PI;
+output reg[3:0]PO;
+always@(posedge Clk)
+begin
+PO = PI;
+end 
+endmodule
+```
+
+## OUTPUT:
+### Serial Input Parallel Output (SIPO):
+#### RTL Registers:
+![siportl](https://user-images.githubusercontent.com/93427208/172890526-7cdef74c-d229-4e0c-a1bf-ae418d1ea67e.png)
+#### Timing Diagram for Shift Registers:
+![sipowf](https://user-images.githubusercontent.com/93427208/172891072-1aa17fbf-3a28-4456-bdbe-c62ad3d037a4.png)
 
 
+### Parallel Input Serial Output (PISO):
+#### RTL Registers:
+![pisortl](https://user-images.githubusercontent.com/93427208/172891125-dd40835b-5a51-432a-95e0-614b60cae3b6.png)
 
+#### TIMING DIGRAMS FOR SHIFT REGISTERS
 
+![image](https://user-images.githubusercontent.com/93427208/172894891-d92c010d-0e2e-4385-bca8-3e6151f73bf6.png)
 
+### Parallel Input Parallel Output (PIPO):
+#### RTL Registers:
+![piportl](https://user-images.githubusercontent.com/93427208/172891343-97154fb1-37b5-447f-8055-0b0242255b18.png)
+#### Timing Diagram for Shift Registers:
 
-### RTL LOGIC  REGISTERS   
-
-
-
-
-
-
-
-
-
-### TIMING DIGRAMS FOR SHIFT REGISTERS
-
-
+![pipowf](https://user-images.githubusercontent.com/93427208/172891436-ac114fc9-32df-4f45-8cd2-7f31d9ca7e5b.png)
 
 
 
@@ -77,3 +136,4 @@ RegisterNumber:
 
 
 ### RESULTS 
+Thus, PISO , PIPO, SIPO are implemented using verilog and their functionality using their functional tables is validated.
